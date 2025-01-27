@@ -1,0 +1,14 @@
+{
+  "name": "postmessage-communication",
+  "version": "1.0.0",
+  "description": "A lightweight utility for bidirectional communication between parent and child windows (e.g., iframes) using postMessage.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "postmessage"
+  ],
+  "author": "Jigar Sutariya",
+  "license": "ISC"
+}
