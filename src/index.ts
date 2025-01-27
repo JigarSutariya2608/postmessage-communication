@@ -5,15 +5,14 @@
  * @param {any} payload - The data to send in the message.
  * @param {string} allowedOrigin - The expected origin of the target window for security.
  */
-function sendMessageToWindow(
-  targetWindow,
-  messageType,
-  payload,
-  allowedOrigin
-) {
-  // Send the message to the target window
+export function sendMessageToWindow(
+  targetWindow: Window,
+  messageType: string,
+  payload: any,
+  allowedOrigin: string
+): void {
   targetWindow.postMessage(
-    { type: messageType, payload: payload },
+    { type: messageType, payload },
     allowedOrigin
   );
 }
@@ -24,29 +23,24 @@ function sendMessageToWindow(
  * @param {Object} messageHandlers - An object where keys are message types and values are handler functions.
  * @returns {Function} - A cleanup function to remove the event listener.
  */
-function receiveMessagesFromWindow(allowedOrigin, messageHandlers) {
-  // Handle incoming messages
-  const handleMessage = (event) => {
-    // Check the origin for security
+export function receiveMessagesFromWindow(
+  allowedOrigin: string,
+  messageHandlers: { [key: string]: (payload: any) => void }
+): () => void {
+  const handleMessage = (event: MessageEvent): void => {
     if (event.origin !== allowedOrigin) return;
 
-    // Extract message type and payload
     const { type, payload } = event.data;
-
-    // If a handler for this message type exists, call it
-    if (messageHandlers[type]) {
-      messageHandlers[type](payload);
+    const handler = messageHandlers[type];
+    if (handler) {
+      handler(payload);
     }
   };
 
-  // Attach the event listener for incoming messages
-  window.addEventListener("message", handleMessage);
+  window.addEventListener('message', handleMessage);
 
-  // Return cleanup function to remove the event listener
+  // Return a cleanup function
   return () => {
-    window.removeEventListener("message", handleMessage);
+    window.removeEventListener('message', handleMessage);
   };
 }
-
-// Export the functions for external usage
-module.exports = { sendMessageToWindow, receiveMessagesFromWindow };

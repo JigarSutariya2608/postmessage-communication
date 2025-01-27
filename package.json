@@ -2,13 +2,22 @@
   "name": "postmessage-communication",
   "version": "1.0.0",
   "description": "A lightweight utility for bidirectional communication between parent and child windows (e.g., iframes) using postMessage.",
-  "main": "src/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
-    "postmessage"
+    "postmessage",
+    "iframe",
+    "parent-child",
+    "communication",
+    "typescript"
   ],
   "author": "Jigar Sutariya",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
 }
